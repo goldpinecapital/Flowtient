@@ -108,39 +108,54 @@
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const btn = form.querySelector('button[type="submit"]');
+    const note = document.getElementById('formNote');
     const original = btn.textContent;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
 
     btn.textContent = 'Sending...';
     btn.disabled = true;
+    note.textContent = 'Sending your request securely...';
+    note.classList.remove('success', 'error');
 
-    // Simulate submission - replace with actual endpoint (Formspree, EmailJS, etc.)
-    setTimeout(() => {
-      btn.textContent = 'Sent! We\'ll be in touch within 4 hours.';
+    try {
+      const response = await fetch('/api/audit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Could not submit the form.');
+      }
+
+      form.reset();
       btn.style.background = 'var(--success)';
+      btn.textContent = 'Sent! We\'ll be in touch within 4 hours.';
+      note.textContent = 'Thanks - your audit request was sent to our team.';
+      note.classList.add('success');
 
-      // Collect form data for logging / debugging
-      const data = {
-        name:      form.querySelector('#name').value,
-        email:     form.querySelector('#email').value,
-        company:   form.querySelector('#company').value,
-        challenge: form.querySelector('#challenge').value,
-        size:      form.querySelector('#size').value,
-        timestamp: new Date().toISOString(),
-      };
-      console.log('[Flowtient] Form submission:', data);
-
-      // Reset after delay
       setTimeout(() => {
-        form.reset();
         btn.textContent = original;
         btn.disabled = false;
         btn.style.background = '';
+        note.textContent = 'We respond within 4 business hours. No commitment required.';
+        note.classList.remove('success');
       }, 5000);
-    }, 1200);
+    } catch (error) {
+      btn.textContent = original;
+      btn.disabled = false;
+      note.textContent = error.message || 'Something went wrong. Please email goldpinecapital@gmail.com directly.';
+      note.classList.add('error');
+    }
   });
 })();
 

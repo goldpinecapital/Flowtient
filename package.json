@@ -1,0 +1,12 @@
+{
+  "name": "flowtient-landing-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static Flowtient landing page with Vercel API lead capture.",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "nodemailer": "^8.0.7"
+  }
+}

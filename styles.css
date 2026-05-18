@@ -1751,6 +1751,19 @@ body {
   text-align: center;
   margin-top: 4px;
 }
+.form-note.success {
+  color: var(--success);
+}
+.form-note.error {
+  color: #FCA5A5;
+}
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 
 /* ---------------------------------------------
    FOOTER

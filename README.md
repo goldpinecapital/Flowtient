@@ -20,10 +20,29 @@ Static landing page for Flowtient, an AI consulting business helping small and m
    - Framework Preset: **Other**
    - Build Command: leave empty
    - Output Directory: leave empty
-   - Install Command: leave empty
+   - Install Command: leave default (`npm install`)
 6. Click **Deploy**.
 
 Vercel will serve `index.html` from the project root.
+
+## Lead Capture Email Setup
+
+The audit form posts to `api/audit.js`, a Vercel serverless function that emails every submission to `goldpinecapital@gmail.com`.
+
+In Vercel, add these environment variables:
+
+- `GMAIL_USER` - Gmail account used to send lead notifications, usually `goldpinecapital@gmail.com`
+- `GMAIL_APP_PASSWORD` - Gmail App Password, not your normal Gmail password
+- `AUDIT_TO_EMAIL` - where leads should be sent, usually `goldpinecapital@gmail.com`
+
+To create a Gmail App Password:
+
+1. Turn on 2-Step Verification for the Gmail account.
+2. Go to Google Account -> Security -> App passwords.
+3. Create an app password for "Mail".
+4. Copy the 16-character password into Vercel as `GMAIL_APP_PASSWORD`.
+
+After adding environment variables, redeploy the Vercel project.
 
 ## Custom Domain
 
@@ -36,4 +55,4 @@ After the first deploy:
 
 ## Important
 
-The current contact form is front-end only. It shows a success message but does not send email or save leads yet. To make it production-ready, connect it to a form service or a Vercel serverless API route.
+The form sends lead details by email. There is no database yet. If you want a lead database later, the cheapest simple options are Google Sheets via Apps Script or Supabase free tier.
