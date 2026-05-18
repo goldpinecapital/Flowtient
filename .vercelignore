@@ -1,0 +1,6 @@
+deploy/
+README-local-notes.md
+.env
+.env.*
+node_modules/
+.git/
