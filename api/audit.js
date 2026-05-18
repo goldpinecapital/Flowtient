@@ -2,6 +2,30 @@ const nodemailer = require('nodemailer');
 
 const TO_EMAIL = process.env.AUDIT_TO_EMAIL || 'goldpinecapital@gmail.com';
 
+async function readBody(req) {
+  if (req.body && typeof req.body === 'object') return req.body;
+  if (typeof req.body === 'string') {
+    try {
+      return JSON.parse(req.body);
+    } catch {
+      return {};
+    }
+  }
+
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(Buffer.from(chunk));
+  }
+
+  if (!chunks.length) return {};
+
+  try {
+    return JSON.parse(Buffer.concat(chunks).toString('utf8'));
+  } catch {
+    return {};
+  }
+}
+
 function escapeHtml(value = '') {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -26,6 +50,8 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const body = await readBody(req);
+
   const {
     name = '',
     email = '',
@@ -34,7 +60,7 @@ module.exports = async function handler(req, res) {
     challenge = '',
     size = '',
     website = '',
-  } = req.body || {};
+  } = body;
 
   // Honeypot field: real users never see/fill this.
   if (website) {
@@ -48,7 +74,11 @@ module.exports = async function handler(req, res) {
   }
 
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.error('Missing GMAIL_USER or GMAIL_APP_PASSWORD environment variable.');
+    console.error('Flowtient audit email config missing', {
+      hasGmailUser: Boolean(process.env.GMAIL_USER),
+      hasGmailAppPassword: Boolean(process.env.GMAIL_APP_PASSWORD),
+      toEmail: TO_EMAIL,
+    });
     return res.status(500).json({
       error: 'Lead email service is not configured yet.',
     });
@@ -61,7 +91,9 @@ module.exports = async function handler(req, res) {
   });
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.GMAIL_USER,
       pass: process.env.GMAIL_APP_PASSWORD,
@@ -91,6 +123,15 @@ module.exports = async function handler(req, res) {
   `;
 
   try {
+    console.log('Flowtient audit lead received', {
+      name,
+      email,
+      phoneProvided: Boolean(phone),
+      company,
+      size,
+      toEmail: TO_EMAIL,
+    });
+
     await transporter.sendMail({
       from: `"Flowtient Website" <${process.env.GMAIL_USER}>`,
       to: TO_EMAIL,
@@ -111,9 +152,16 @@ module.exports = async function handler(req, res) {
       html,
     });
 
+    console.log('Flowtient audit lead email sent', { toEmail: TO_EMAIL, leadEmail: email });
     return res.status(200).json({ ok: true });
   } catch (error) {
-    console.error('Failed to send lead email:', error);
+    console.error('Failed to send Flowtient lead email:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response,
+      responseCode: error.responseCode,
+    });
     return res.status(500).json({
       error: 'Could not send your request right now. Please try again later.',
     });

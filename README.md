@@ -44,6 +44,10 @@ To create a Gmail App Password:
 
 After adding environment variables, redeploy the Vercel project.
 
+If `GMAIL_USER` and `AUDIT_TO_EMAIL` are both `goldpinecapital@gmail.com`, Gmail may thread the message with sent mail or place it in **All Mail / Sent** instead of showing it as a fresh inbox message. For testing, you can temporarily set `AUDIT_TO_EMAIL` to another email address, redeploy, and submit the form again.
+
+If the form shows success but no email arrives, check **Vercel -> Project -> Functions/Logs** for `Flowtient audit lead received` and `Flowtient audit lead email sent`.
+
 ## Custom Domain
 
 After the first deploy:
