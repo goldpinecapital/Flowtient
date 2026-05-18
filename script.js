@@ -4,6 +4,36 @@
 
 'use strict';
 
+// -- MOUSE GLOW ----------------------------------
+(function initCursorGlow() {
+  const glow = document.getElementById('cursorGlow');
+  if (!glow || window.matchMedia('(pointer: coarse)').matches) return;
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let currentX = targetX;
+  let currentY = targetY;
+
+  function render() {
+    currentX += (targetX - currentX) * 0.16;
+    currentY += (targetY - currentY) * 0.16;
+    glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(render);
+  }
+
+  window.addEventListener('pointermove', (event) => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    glow.classList.add('is-active');
+  }, { passive: true });
+
+  window.addEventListener('pointerdown', () => glow.classList.add('is-pressed'));
+  window.addEventListener('pointerup', () => glow.classList.remove('is-pressed'));
+  window.addEventListener('pointerleave', () => glow.classList.remove('is-active'));
+
+  render();
+})();
+
 // -- NAV: scroll state & mobile toggle ----------
 (function initNav() {
   const nav = document.getElementById('nav');

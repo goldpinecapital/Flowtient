@@ -42,7 +42,7 @@
       ]
     },
     {
-      "source": "/flowtient-logo.svg",
+      "source": "/flowtient-logo.png",
       "headers": [
         {
           "key": "Cache-Control",

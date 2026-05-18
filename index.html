@@ -8,10 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="flowtient-logo.svg" />
+  <link rel="icon" type="image/png" href="flowtient-logo.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
   <!-- ---------------------------------------------
        NAV
@@ -19,7 +20,7 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="#" class="logo">
-        <img class="logo-mark" src="flowtient-logo.svg" alt="Flowtient logo" />
+        <img class="logo-mark" src="flowtient-logo.png" alt="Flowtient logo" />
         <span class="logo-text">Flow<span class="logo-accent">tient</span></span>
       </a>
       <ul class="nav-links">
@@ -87,39 +88,93 @@
         <div class="intel-panel">
           <div class="intel-header">
             <span class="status-dot"></span>
-            <span>Flowtient Workflow Engine</span>
-            <span class="intel-status">Live model</span>
+            <span>SMB Process Transformation</span>
+            <span class="intel-status">AI-enhanced</span>
           </div>
-          <div class="workflow-orbit">
-            <div class="core-node">
-              <span>AI</span>
-              <small>Ops Brain</small>
+
+          <div class="process-visual">
+            <div class="process-column process-column-manual">
+              <div class="process-heading">
+                <span>Without AI</span>
+                <small>Manual process</small>
+              </div>
+              <div class="process-flow">
+                <div class="flow-step">
+                  <span class="step-icon person-icon"></span>
+                  <strong>Lead intake</strong>
+                  <small>Manual entry</small>
+                </div>
+                <div class="flow-step">
+                  <span class="step-icon document-icon"></span>
+                  <strong>Order routing</strong>
+                  <small>Email handoffs</small>
+                </div>
+                <div class="flow-step">
+                  <span class="step-icon stack-icon"></span>
+                  <strong>Inventory check</strong>
+                  <small>Spreadsheet lookup</small>
+                </div>
+                <div class="flow-step">
+                  <span class="step-icon clock-icon"></span>
+                  <strong>Customer follow-up</strong>
+                  <small>Delayed response</small>
+                </div>
+              </div>
+              <div class="process-arrow process-arrow-slow">Slow + manual</div>
             </div>
-            <div class="orbit-node node-1">Leads</div>
-            <div class="orbit-node node-2">Docs</div>
-            <div class="orbit-node node-3">CRM</div>
-            <div class="orbit-node node-4">Support</div>
+
+            <div class="ai-transfer">
+              <div class="transfer-core">
+                <span>AI</span>
+                <small>Flowtient layer</small>
+              </div>
+              <p>AI takes away repeatable manual hours</p>
+            </div>
+
+            <div class="process-column process-column-ai">
+              <div class="process-heading">
+                <span>With LLM + GenAI</span>
+                <small>AI-enhanced workflow</small>
+              </div>
+              <div class="process-flow">
+                <div class="flow-step ai-step">
+                  <span class="step-icon ai-icon">AI</span>
+                  <strong>Automated capture</strong>
+                  <small>Forms, email, docs</small>
+                </div>
+                <div class="flow-step ai-step">
+                  <span class="step-icon route-icon">AI</span>
+                  <strong>Smart routing</strong>
+                  <small>Right task, right owner</small>
+                </div>
+                <div class="flow-step ai-step">
+                  <span class="step-icon ops-icon">AI</span>
+                  <strong>Connected ops</strong>
+                  <small>CRM, inventory, support</small>
+                </div>
+                <div class="flow-step ai-step">
+                  <span class="step-icon forecast-icon">AI</span>
+                  <strong>Predictive follow-up</strong>
+                  <small>Next-best action</small>
+                </div>
+              </div>
+              <div class="process-arrow process-arrow-fast">Fast + efficient</div>
+            </div>
           </div>
-          <div class="metric-river">
-            <div class="river-row">
-              <span>Manual steps reduced</span>
-              <strong>Measured after audit</strong>
+
+          <div class="workflow-outcomes">
+            <div>
+              <span>Manual handoffs</span>
+              <strong>Measured and reduced</strong>
             </div>
-            <div class="river-row">
-              <span>Follow-ups triggered</span>
-              <strong>Every qualified lead</strong>
+            <div>
+              <span>Customer response</span>
+              <strong>Faster by design</strong>
             </div>
-            <div class="river-row">
-              <span>Team capacity unlocked</span>
-              <strong>Without new hires</strong>
+            <div>
+              <span>Growth capacity</span>
+              <strong>Unlocked before hiring</strong>
             </div>
-          </div>
-          <div class="signal-stack">
-            <span>GenAI</span>
-            <span>Workflow</span>
-            <span>Revenue</span>
-            <span>Savings</span>
-            <span>Profit</span>
           </div>
         </div>
       </div>
@@ -842,7 +897,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="#" class="logo">
-            <img class="logo-mark" src="flowtient-logo.svg" alt="Flowtient logo" />
+            <img class="logo-mark" src="flowtient-logo.png" alt="Flowtient logo" />
             <span class="logo-text">Flow<span class="logo-accent">tient</span></span>
           </a>
           <p class="footer-tagline">Custom AI systems for small and medium businesses.<br />Built for Main Street, not Wall Street.</p>

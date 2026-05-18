@@ -7,7 +7,7 @@ Static landing page for Flowtient, an AI consulting business helping small and m
 - `index.html` - main website content
 - `styles.css` - visual design, layout, animation, responsive styling
 - `script.js` - navigation, scroll reveal, FAQ accordion, form placeholder behavior
-- `flowtient-logo.svg` - logo and favicon
+- `flowtient-logo.png` - square rounded logo and favicon
 - `vercel.json` - Vercel deployment headers and static asset caching
 
 ## Deploy on Vercel
